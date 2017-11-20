@@ -80,7 +80,7 @@ def effort_score(test_results, test_order):
     # failures in provided tests
     if matched_failed_tests_indices:
         imin = min(matched_failed_tests_indices)
-        return test_results.cost(test_order[:imin])
+        return test_results.cost(test_order[:imin + 1])
     # tests failed but not in provided test order
     if failed_tests:
         failed_tests_indices = [test_results.test_index(test) for test in failed_tests]
@@ -95,16 +95,19 @@ class CI:
         self.tests = tests
         self.db = pd.read_csv(dbfname)
         self.score_function = score_function
-        self.score = 0
+        self.scores = []
 
     def __repr__(self):
-        return 'Final score = {:d}'.format(self.score)
+        return 'Score = {:d}'.format(self.score())
 
     def __enter__(self):
         return self
 
     def __exit__(self, type, value, traceback):
         return
+
+    def score(self):
+        return sum(self.scores)
 
     def result(self, row):
         """
@@ -117,7 +120,7 @@ class CI:
         test_results = TestResults([TestResult(tests[i], cost[i], status[i]) for i in range(len(tests))])
         score = self.score_function(test_results, self.tests.order)
         if score:
-            self.score += score
+            self.scores += [score]
         return Result(cl, test_results, score)
 
     def __iter__(self):

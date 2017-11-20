@@ -8,7 +8,7 @@ def optimize():
 
     with hackathon.ci.CI(tests, DBFNAME) as ci:
         for result in ci:
-            #print(result)
+            print(result)
 
             '''
             for test in result.test_results:
