@@ -13,11 +13,19 @@ class TestResult:
     def status(self):
         return self.STATUS[self.istatus]
 
+    def __repr__(self):
+        return '{} {}, cost = {:d}'.format(self.name, self.STATUS[self.istatus], self.cost)
+
 
 class TestResults:
 
     def __init__(self, results=[]):
         self.results = results
+
+    def __repr__(self):
+        ntests = self.test_results.ntests()
+        nfailures = self.test_results.nfailures()
+        return '{:d}: {:4d} tests, {:3d} failures.'.format(self.cl, ntests, nfailures)
 
     def nfailures(self):
         return sum(1 for test in self.results if test.status() == 'failed')
@@ -41,6 +49,11 @@ class TestResults:
 
     def cost_upto_incl(self, idx):
         return sum(self.results[i].cost for i in range(idx + 1))
+
+    def __iter__(self):
+        for test in self.test_results:
+            yield test
+        return
 
 
 class Result:
