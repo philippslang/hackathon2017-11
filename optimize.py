@@ -1,6 +1,6 @@
 import hackathon
 
-DBFNAME = 'data'
+DBFNAME = 'data_train.csv'
 
 
 def optimize():
