@@ -1,13 +1,15 @@
 import hackathon
 
+DBFNAME = 'data'
+
 
 def optimize():
-    tests = hackathon.tests.Tests()
-    tests.order = ['some', 'more']
-    ci = hackathon.ci.CI(tests)
-    for cl in ci:
-        print(cl)
-        tests.order.append('test')
+    tests = hackathon.tests.Tests(order=[])
+
+    with hackathon.ci.CI(tests, DBFNAME) as ci:
+        for result in ci:
+            print(result)
+            tests.order.append('test')
 
 
 if __name__ == '__main__':
