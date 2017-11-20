@@ -40,11 +40,14 @@ class CI:
         return
 
     def result(self, row):
+        """
+        Schema here.
+        """
+        cl = int(row[1])
         tests = row[4].split(DELIM)
         status = row[3].replace('0', 'passed').replace('1', 'failed').split(DELIM)
         cost = [int(i) for i in row[2].split(DELIM)]
-        test_results = [TestResult(tests[i], cost[i], status[i]) for i in range(len(tests))]
-        cl = int(row[1])
+        test_results = [TestResult(tests[i], cost[i], status[i]) for i in range(len(tests))]        
         return Result(cl, test_results, 0)
 
     def __iter__(self):
