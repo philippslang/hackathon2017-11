@@ -8,9 +8,16 @@ def optimize():
 
     with hackathon.ci.CI(tests, DBFNAME) as ci:
         for result in ci:
-            print(result)
+            #print(result)
+
+            '''
+            for test in result.test_results:
+                print(test.name, test.cost, test.status())
+            break
+            '''
+
             tests.order = result.test_names()
-            #tests.order = sorted(result.test_names())
+            tests.order = sorted(result.test_names())
         print(ci)
 
 
