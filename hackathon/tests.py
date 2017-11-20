@@ -1,3 +1,4 @@
-import collections
-
-Tests = collections.namedtuple('Tests', 'order')
+class Tests:
+    
+    def __init__(self, order):
+        self.order = order

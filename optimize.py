@@ -9,7 +9,9 @@ def optimize():
     with hackathon.ci.CI(tests, DBFNAME) as ci:
         for result in ci:
             print(result)
-            tests.order.append('test')
+            tests.order = result.test_names()
+            #tests.order = sorted(result.test_names())
+        print(ci)
 
 
 if __name__ == '__main__':
