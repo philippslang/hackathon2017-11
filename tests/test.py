@@ -18,6 +18,8 @@ def test():
             f.write('\n')
             f.write('1,3%4%5,0%0%1,t4%t5%t6')
             f.write('\n')
+            f.write('1,3%4%5,0%0%0,t4%t5%t6')
+            f.write('\n')
 
     tests = hackathon.tests.Tests(order=[])
     with hackathon.ci.CI(tests, FNAME) as ci:
@@ -33,8 +35,10 @@ def test():
                 tests.order = ['t6']
             if i == 3:
                 assert result.score == 5
+            if i == 4:
+                assert result.score == None
             i += 1
-        assert i == 4
+        assert i == 5
         assert ci.score() == 23
         print(ci)
     
